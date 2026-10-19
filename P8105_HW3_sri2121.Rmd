@@ -185,6 +185,8 @@ citi_df |>
   knitr::kable()
 ```
 
+Rides are more common in July than in January in both years and there are more rides in 2024 than in 2020 in both months. The sample contains 12,420 rides in January 2020 and 18,861 in January 2024. For July, it contains 21,048 rides in 2020 and 47,156 in 2024. 
+
 Most popular starting stations in July 2024:
 
 ```{r}
@@ -196,6 +198,8 @@ citi_df |>
   head(5) |>
   knitr::kable()
 ```
+
+The five most popular starting stations in July 2024 are Pier 61 at Chelsea Piers, University Pl & E 14 St, W 21 St & 6 Ave, West St & Chambers St and W 31 St & 7 Ave. 
 
 Median ride duration by day of week, month, year:
 
@@ -215,6 +219,8 @@ citi_df |>
   theme(legend.position = "bottom")
 ```
 
+Median ride duration is longer in July than in January in both years. The seasonal difference is much larger in 2020 (medians of about 8.9 minutes in January vs. 14.6 in July) than in 2024 (about 7.7 vs. 9.6). Rides are longer on weekends than on weekdays in most cases.
+
 Ride duration in 2024 by month, rider type, bike type:
 
 ```{r}
@@ -230,4 +236,6 @@ citi_df |>
     fill = "Bike type") +
   theme(legend.position = "bottom")
 ```
+
+In 2024, casual riders take longer rides than members in every combination of month and bike type. Rides are longer in July than in January for both groups. Among casual riders, electric bike rides are shorter than classic bike rides (about 9 vs. 13 minutes in January, and 13 vs. 16 minutes in July). Among members, the two bike types are more similar, with electric bike rides slightly longer in July (about 9.2 vs. 7.7 minutes). 
 
