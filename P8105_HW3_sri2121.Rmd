@@ -81,4 +81,34 @@ nhanes_df |>
     y = "Age (years)")
 ```
 
+Total activity and age:
+
+```{r}
+nhanes_long_df =
+  nhanes_df |>
+  pivot_longer(
+    min1:min1440,
+    names_to = "minute",
+    names_prefix = "min",
+    values_to = "mims") |>
+  mutate(minute = as.numeric(minute))
+
+total_df =
+  nhanes_long_df |>
+  group_by(seqn, sex, age, education) |>
+  summarize(total_activity = sum(mims))
+
+total_df |>
+  ggplot(aes(x = age, y = total_activity, color = sex)) +
+  geom_point(alpha = .5) +
+  geom_smooth(se = FALSE) +
+  facet_grid(. ~ education) +
+  labs(
+    title = "Total daily activity vs. age",
+    x = "Age (years)",
+    y = "Total daily MIMS") +
+  theme(legend.position = "bottom")
+```
+
+
 
