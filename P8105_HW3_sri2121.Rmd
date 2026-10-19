@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 ```
 ## Problem 2
 
-Loading, tidying, merging data
+Loading, tidying, merging data:
 
 ```{r}
 covar_df =
@@ -55,4 +55,19 @@ nhanes_df =
 
 nhanes_df
 ```
+
+Education and sex table:
+
+```{r}
+nhanes_df |>
+  count(education, sex) |>
+  pivot_wider(
+    names_from = sex,
+    values_from = n) |>
+  knitr::kable()
+```
+
+Men and women are about evenly split in the "less than high school" group (27 men, 28 women) and the "more than high school" group (56 men, 59 women). In the "high school equivalent" group there are more men than women (35 vs. 23). The "more than high school" group is by far the largest, with 115 participants.
+
+
 
