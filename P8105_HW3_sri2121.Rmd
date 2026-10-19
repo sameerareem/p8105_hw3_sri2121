@@ -185,6 +185,49 @@ citi_df |>
   knitr::kable()
 ```
 
+Most popular starting stations in July 2024:
 
+```{r}
+citi_df |>
+  filter(year == "2024", month == "July") |>
+  drop_na(start_station_name) |>
+  count(start_station_name, name = "n_rides") |>
+  arrange(desc(n_rides)) |>
+  head(5) |>
+  knitr::kable()
+```
 
+Median ride duration by day of week, month, year:
+
+```{r}
+citi_df |>
+  group_by(year, month, weekdays) |>
+  summarize(median_duration = median(duration)) |>
+  ggplot(aes(x = weekdays, y = median_duration, color = month, group = month)) +
+  geom_point() +
+  geom_line() +
+  facet_grid(. ~ year) +
+  labs(
+    title = "Median ride duration by day of week, month, and year",
+    x = "Day of the week",
+    y = "Median duration (minutes)",
+    color = "Month") +
+  theme(legend.position = "bottom")
+```
+
+Ride duration in 2024 by month, rider type, bike type:
+
+```{r}
+citi_df |>
+  filter(year == "2024") |>
+  ggplot(aes(x = month, y = duration, fill = rideable_type)) +
+  geom_boxplot() +
+  facet_grid(. ~ member_casual) +
+  labs(
+    title = "Ride duration in 2024 by month, rider type, and bike type",
+    x = "Month",
+    y = "Duration (minutes)",
+    fill = "Bike type") +
+  theme(legend.position = "bottom")
+```
 
