@@ -1,0 +1,7 @@
+---
+title: "P8105_HW3-sri2121"
+author: "Sameera"
+date: "2026-10-19"
+output: github_document
+---
+
