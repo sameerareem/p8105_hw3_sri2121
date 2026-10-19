@@ -127,7 +127,49 @@ nhanes_long_df |>
   theme(legend.position = "bottom")
 ```
 
-All three education groups follow the same daily pattern. Activity is very low overnight, rises sharply in the early morning, stays high through the daytime, and drops off in the evening. Women tend to have a slightly earlier or higher morning rise than men in each group. In the "more than high school" group, women stay active through the afternoon and early evening while men's activity declines, so the two smooth curves separate. In the other two groups the curves for men and women are close together for most of the day. Because the individual-level lines are very noisy, the smooths are the easiest way to compare groups.
+All three education groups follow the same daily pattern. Activity is very low overnight, rises sharply in the early morning, stays high through the daytime, and drops off in the evening. 
+
+## Problem 3
+
+Importing and tidying data
+
+```{r}
+jan_2020_df =
+  read_csv("./data/citibike/Jan_2020_Citi.csv") |>
+  janitor::clean_names() |>
+  mutate(year = "2020", month = "January")
+
+july_2020_df =
+  read_csv("./data/citibike/July_2020_Citi.csv") |>
+  janitor::clean_names() |>
+  mutate(year = "2020", month = "July")
+
+jan_2024_df =
+  read_csv("./data/citibike/Jan_2024_Citi.csv") |>
+  janitor::clean_names() |>
+  mutate(year = "2024", month = "January")
+
+july_2024_df =
+  read_csv("./data/citibike/July_2024_Citi.csv") |>
+  janitor::clean_names() |>
+  mutate(year = "2024", month = "July")
+
+citi_df =
+  bind_rows(jan_2020_df, july_2020_df, jan_2024_df, july_2024_df) |>
+  mutate(
+    year = factor(year),
+    month = factor(month, levels = c("January", "July")),
+    weekdays = factor(
+      weekdays,
+      levels = c("Monday", "Tuesday", "Wednesday", "Thursday",
+                 "Friday", "Saturday", "Sunday")),
+    rideable_type = factor(rideable_type),
+    member_casual = factor(member_casual, levels = c("member", "casual"))) |>
+  select(ride_id, year, month, weekdays, everything())
+
+citi_df
+```
+
 
 
 
