@@ -5,3 +5,54 @@ date: "2026-10-19"
 output: github_document
 ---
 
+Loading libraries
+
+```{r setup, include = FALSE}
+library(tidyverse)
+
+knitr::opts_chunk$set(
+  fig.width = 8,
+  fig.asp = .6,
+  out.width = "90%"
+)
+```
+## Problem 2
+
+Loading, tidying, merging data
+
+```{r}
+covar_df =
+  read_csv("./data/nhanes_covar.csv", skip = 4) |>
+  janitor::clean_names()
+
+accel_df =
+  read_csv("./data/nhanes_accel.csv") |>
+  janitor::clean_names()
+
+nhanes_df = inner_join(covar_df, accel_df, by = "seqn")
+
+nhanes_df =
+  nhanes_df |>
+  filter(age >= 21) |>
+  drop_na(sex, age, bmi, education) |>
+  mutate(
+    seqn = as.character(seqn),
+    sex = case_match(
+      sex,
+      1 ~ "male",
+      2 ~ "female"),
+    sex = factor(sex, levels = c("male", "female")),
+    education = case_match(
+      education,
+      1 ~ "less than high school",
+      2 ~ "high school equivalent",
+      3 ~ "more than high school"),
+    education = factor(
+      education,
+      levels = c("less than high school",
+                 "high school equivalent",
+                 "more than high school")))
+
+nhanes_df
+```
+
