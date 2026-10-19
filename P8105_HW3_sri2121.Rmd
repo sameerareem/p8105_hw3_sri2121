@@ -135,22 +135,22 @@ Importing and tidying data
 
 ```{r}
 jan_2020_df =
-  read_csv("./data/citibike/Jan_2020_Citi.csv") |>
+  read_csv("./data/Jan 2020 Citi.csv") |>
   janitor::clean_names() |>
   mutate(year = "2020", month = "January")
 
 july_2020_df =
-  read_csv("./data/citibike/July_2020_Citi.csv") |>
+  read_csv("./data/July 2020 Citi.csv") |>
   janitor::clean_names() |>
   mutate(year = "2020", month = "July")
 
 jan_2024_df =
-  read_csv("./data/citibike/Jan_2024_Citi.csv") |>
+  read_csv("./data/Jan 2024 Citi.csv") |>
   janitor::clean_names() |>
   mutate(year = "2024", month = "January")
 
 july_2024_df =
-  read_csv("./data/citibike/July_2024_Citi.csv") |>
+  read_csv("./data/July 2024 Citi.csv") |>
   janitor::clean_names() |>
   mutate(year = "2024", month = "July")
 
@@ -170,6 +170,20 @@ citi_df =
 citi_df
 ```
 
+The cleaned dataset contains `r nrow(citi_df)` rides from four months (January and July of 2020 and 2024). Each ride has its year and month (added from the file names), the day of the week, ride duration in minutes, bike type (classic or electric), rider type (member or casual), and the names of the start and end stations. Duration ranges from 1 minute to about 239 minutes.
+
+
+Total number of rides in each combination of year and month:
+
+```{r}
+citi_df |>
+  count(year, month, member_casual) |>
+  pivot_wider(
+    names_from = member_casual,
+    values_from = n) |>
+  mutate(total = member + casual) |>
+  knitr::kable()
+```
 
 
 
